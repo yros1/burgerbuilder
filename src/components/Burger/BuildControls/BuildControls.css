@@ -32,10 +32,23 @@
     cursor: not-allowed;
     border: 1px solid #CCC;
     color: #888888;
+    animation: disable 0.3s linear;
 }
 
 .OrderButton:not(:disabled) {
     animation: enable 0.3s linear;
+}
+
+@keyframes disable {
+    0% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 @keyframes enable {
