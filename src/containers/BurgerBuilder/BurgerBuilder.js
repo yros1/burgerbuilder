@@ -28,7 +28,8 @@ class BurgerBuilder extends Component {
             meat: 0
         },
         totalPrice: 4,
-        purchasable: false
+        purchasable: false,
+        purchasing: false
     } 
 
     updatePurchaseState (ingeredients) {
@@ -80,6 +81,10 @@ class BurgerBuilder extends Component {
         this.updatePurchaseState(updatedIngredients);
     }
 
+    purchaseHandler = () => {
+        this.setState({purchasing: true})
+    }
+
     render () {
         const disabledInfo = {
             ...this.state.ingredients // I make a copy of that object
@@ -91,16 +96,17 @@ class BurgerBuilder extends Component {
 
         return (
             <Aux>
-                <Modal>
+                <Modal show={this.state.purchasing}>
                     <OrderSummary ingredients={this.state.ingredients} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls 
-                ingredientAdded={this.addIngredientHandler}
-                inredientRemoved={this.removeInredientHandler} 
-                disabled={disabledInfo} 
-                purchasable={this.state.purchasable}
-                price={this.state.totalPrice}/>
+                    ingredientAdded={this.addIngredientHandler}
+                    inredientRemoved={this.removeInredientHandler} 
+                    disabled={disabledInfo} 
+                    purchasable={this.state.purchasable}
+                    ordered={this.purchaseHandler}
+                    price={this.state.totalPrice}/>
             </Aux>
         );
     }
