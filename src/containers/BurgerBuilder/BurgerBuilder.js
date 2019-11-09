@@ -89,6 +89,10 @@ class BurgerBuilder extends Component {
         this.setState({purchasing: false});
     }
 
+    purchaseContinueHandler = () => {
+        alert('You continue!');
+    }
+
     render () {
         const disabledInfo = {
             ...this.state.ingredients // I make a copy of that object
@@ -103,7 +107,9 @@ class BurgerBuilder extends Component {
                 <Modal show={this.state.purchasing} 
                     modalClosed={this.purchaseCancelHandler} 
                     clicked={this.purchaseCancelHandler}>
-                    <OrderSummary ingredients={this.state.ingredients} />
+                    <OrderSummary ingredients={this.state.ingredients} 
+                        purchaseCancelled={this.purchaseCancelHandler} 
+                        purchaseContinued = {this.purchaseContinueHandler} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls 
