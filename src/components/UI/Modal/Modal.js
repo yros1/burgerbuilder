@@ -16,7 +16,7 @@ class Modal extends Component{
 
         // if old and next value of show property are different then
         // allow to render OrderSummary Component.
-        return nextProps.show !== this.props.show
+        return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
     }
 
     // This is only for checking if above condition works properly
