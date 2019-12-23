@@ -19,7 +19,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             });
             axios.interceptors.response.use(response => response, error => {
                 // fetch error from firebase from service call
-                console.log(error);
+                console.log(error.response);
                 this.setState({error: error});
             });
         }
@@ -33,12 +33,15 @@ const withErrorHandler = (WrappedComponent, axios) => {
             let errorMessage = null;
 
             if (this.state.error){
-                errorMessage = <div>
+                //console.log("ERROR.response OBJECT: " + this.state.error);
+                if (this.state.error.response) {
+                    errorMessage = <div>
                                     <ul>
                                         <li>{this.state.error.message}</li>
-                                        <li>{this.state.error.data}</li>
+                                        <li>{this.state.error.status}</li>
                                     </ul>
                                 </div> 
+                }                
             }
 
             return (
@@ -46,6 +49,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
                     <Modal 
                         show={this.state.error}                        
                         modalClosed={this.errorConfirmedHandler}>
+                            {errorMessage}
                             {/* <div>
                                 <ul>
                                     <li><a href="#">Zurich</a></li>
@@ -56,7 +60,8 @@ const withErrorHandler = (WrappedComponent, axios) => {
                                 </ul>
                                 
                             </div>                         */}
-                            {this.state.error ? this.state.error.message : null}
+
+                            {/* {this.state.error ? this.state.error.message : null} */}
                     </Modal>
                     <WrappedComponent {...this.props} />
                 </Aux>            
