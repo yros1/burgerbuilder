@@ -19,7 +19,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             });
             axios.interceptors.response.use(response => response, error => {
                 // fetch error from firebase from service call
-                console.log(error.response);
+                console.log("Tutaj error: " + error);
                 this.setState({error: error});
             });
         }
@@ -30,38 +30,13 @@ const withErrorHandler = (WrappedComponent, axios) => {
         }
 
         render () {
-            let errorMessage = null;
-
-            if (this.state.error){
-                //console.log("ERROR.response OBJECT: " + this.state.error);
-                if (this.state.error.response) {
-                    errorMessage = <div>
-                                    <ul>
-                                        <li>{this.state.error.message}</li>
-                                        <li>{this.state.error.status}</li>
-                                    </ul>
-                                </div> 
-                }                
-            }
-
             return (
                 <Aux>
                     <Modal 
                         show={this.state.error}                        
                         modalClosed={this.errorConfirmedHandler}>
-                            {errorMessage}
-                            {/* <div>
-                                <ul>
-                                    <li><a href="#">Zurich</a></li>
-                                    <li><a href="#">Geneva</a></li>
-                                    <li><a href="#">Winterthur</a></li>
-                                    <li><a href="#">Lausanne</a></li>
-                                    <li><a href="#">Lucerne</a></li>
-                                </ul>
-                                
-                            </div>                         */}
 
-                            {/* {this.state.error ? this.state.error.message : null} */}
+                            {this.state.error ? this.state.error.message : null}
                     </Modal>
                     <WrappedComponent {...this.props} />
                 </Aux>            

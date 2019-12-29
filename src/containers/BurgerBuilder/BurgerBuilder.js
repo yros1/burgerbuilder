@@ -112,11 +112,11 @@ class BurgerBuilder extends Component {
             deliveryMethod: 'birds'
         }
 
-        axios.post('/orders', order)
+        axios.post('/orders.json', order)
             .then(response => {        
                 this.setState( { loading: false, purchasing: false } );
             })
-            .catch(error => {
+            .catch(error => {                
                 this.setState( { loading: false, purchasing: false } );
             });
     }
