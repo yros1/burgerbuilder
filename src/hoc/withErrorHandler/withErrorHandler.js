@@ -7,21 +7,33 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
     return class extends Component {
         state = {
-            error: null
+            error: null,
+            reqInterceptor: null,
+            resInterceptor: null
         }
 
         componentWillMount () {
-            axios.interceptors.request.use(request => {
+            this.reqInterceptor = axios.interceptors.request.use(request => {
                 // if any send a service call request I dont have my error handling setup any more
                 // therefore clear any error
                 this.setState({error: null});
                 return request;
             });
-            axios.interceptors.response.use(response => response, error => {
+            this.resInterceptor = axios.interceptors.response.use(response => response, error => {
                 // fetch error from firebase from service call
                 console.log("Tutaj error: " + error);
                 this.setState({error: error});
             });
+        }
+
+        componentWillUnmount () {
+            // this behavies like destructor. when we dont neee instance of the component.
+            // So we gonna remove interceptor here for current coponent instance.
+            // That prevnt memory leaks
+            console.log('Will nmount', this.reqInterceptor, this.resInterceptor);
+            axios.interceptors.request.eject(this.reqInterceptor);
+            axios.interceptors.response.eject(this.resInterceptor);
+
         }
 
         errorConfirmedHandler = () => {
