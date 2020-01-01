@@ -36,6 +36,9 @@ class BurgerBuilder extends Component {
             .then( response => {
                 // fetching ingredients from db.
                 this.setState({ingredients: response.data});
+                
+                // Check if the OrderNow button must be enabled
+                this.updatePurchaseState(response.data);
             } )
             .catch(error => {
                 this.setState({error:true})
