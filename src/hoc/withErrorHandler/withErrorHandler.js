@@ -10,7 +10,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             error: null
         }
 
-        componentDidMount () {
+        componentWillMount () {
             axios.interceptors.request.use(request => {
                 // if any send a service call request I dont have my error handling setup any more
                 // therefore clear any error
