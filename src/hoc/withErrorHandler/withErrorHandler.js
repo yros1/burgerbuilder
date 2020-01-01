@@ -30,7 +30,6 @@ const withErrorHandler = (WrappedComponent, axios) => {
             // this behavies like destructor. when we dont neee instance of the component.
             // So we gonna remove interceptor here for current coponent instance.
             // That prevnt memory leaks
-            console.log('Will nmount', this.reqInterceptor, this.resInterceptor);
             axios.interceptors.request.eject(this.reqInterceptor);
             axios.interceptors.response.eject(this.resInterceptor);
 
