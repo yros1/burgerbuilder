@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 
 class Checkout extends Component {
+    
     state = {  
         ingredients: {
             salad: 1,
@@ -10,6 +11,20 @@ class Checkout extends Component {
             cheese: 1,
             bacon: 1
         }
+    }
+
+    componentDidMount() {
+        // extract QeryParameters
+        // console.log(this.props.location);
+        // URLSearchParams convets string '?bacon=2&cheese=2&meat=1&salad=2' 
+        // to array [['bacon', '2'], ['cheese', '2'], ['meat', '1'], ['salad', '2']
+        const query = new URLSearchParams(this.props.location.search);
+        const ingredients = {};
+        for (let param of query.entries()) {
+            // ['salad', '1']
+            ingredients[param[0]] = +param[1]; // by adding plus before param[1], we convert it to be a number
+        }
+        this.setState({ingredients: ingredients});
     }
 
     checkoutCancelledHandler = () => {
@@ -22,7 +37,7 @@ class Checkout extends Component {
         this.props.history.replace('/checkout/contact-data');
     };
 
-    render() {
+    render() {        
         return (
             <div>
                 <CheckoutSummary 
