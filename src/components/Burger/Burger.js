@@ -5,6 +5,7 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 // It si a wrapper for BrgerIngredient components.
 const Burger = (props) => {
+    console.log(props);
     // return an array of object's keys - transfroms object into an array.
     let transformedIngredients = Object.keys(props.ingredients)
      .map(igKey => {

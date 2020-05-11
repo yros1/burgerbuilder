@@ -32,6 +32,7 @@ class BurgerBuilder extends Component {
     } 
 
     componentDidMount () {
+        console.log(this.props);
         axios.get('https://react-my-burger-b40eb.firebaseio.com/ingredients.json')
             .then( response => {
                 // fetching ingredients from db.
@@ -105,30 +106,33 @@ class BurgerBuilder extends Component {
     purchaseContinueHandler = () => {
         // alert('You continue!');
         // Send data to backend using http request
-        this.setState( { loading: true } );
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'John Smith',
-                address: {
-                    street: '12 Hight Street',
-                    city: 'London',
-                    postCode: 'LL1 0LL',
-                    country: 'United Kingdom'
-                },
-                email: 'test@test.com'
-            },
-            deliveryMethod: 'birds'
-        }
+        // this.setState( { loading: true } );
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: 'John Smith',
+        //         address: {
+        //             street: '12 Hight Street',
+        //             city: 'London',
+        //             postCode: 'LL1 0LL',
+        //             country: 'United Kingdom'
+        //         },
+        //         email: 'test@test.com'
+        //     },
+        //     deliveryMethod: 'birds'
+        // }
 
-        axios.post('/orders.json', order)
-            .then(response => {        
-                this.setState( { loading: false, purchasing: false } );
-            })
-            .catch(error => {                
-                this.setState( { loading: false, purchasing: false } );
-            });
+        // axios.post('/orders.json', order)
+        //     .then(response => {        
+        //         this.setState( { loading: false, purchasing: false } );
+        //     })
+        //     .catch(error => {                
+        //         this.setState( { loading: false, purchasing: false } );
+        //     });
+
+        // chenge a page to checkout
+        this.props.history.push('/checkout');
     }
 
     render () {
@@ -172,7 +176,7 @@ class BurgerBuilder extends Component {
         return (
             <Aux>
                 <Modal show={this.state.purchasing} 
-                    modalClos ed={this.purchaseCancelHandler} 
+                    modalClosed={this.purchaseCancelHandler} 
                     clicked={this.purchaseCancelHandler}>
                     {orderSummary}
                 </Modal>
